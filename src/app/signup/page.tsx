@@ -5,9 +5,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
-import { api, ApiError } from '@/lib/api';
+import { api, API_URL, ApiError } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import AuthShell from '@/components/auth/AuthShell';
+import { GoogleIcon } from '@/app/login/GoogleIcon';
 import { Button, Field, Input, Toast } from '@/components/ui';
 
 const schema = z.object({
@@ -62,21 +63,37 @@ export default function SignupPage() {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-          {serverError ? <Toast kind="error" message={serverError} /> : null}
-          <Field label="Full name" error={errors.name?.message}>
-            <Input autoComplete="name" placeholder="Rafi Hassan" {...register('name')} />
-          </Field>
-          <Field label="Email" error={errors.email?.message}>
-            <Input type="email" autoComplete="email" placeholder="you@example.com" {...register('email')} />
-          </Field>
-          <Field label="Password" error={errors.password?.message} hint="At least 8 characters.">
-            <Input type="password" autoComplete="new-password" placeholder="••••••••" {...register('password')} />
-          </Field>
-          <Button type="submit" className="w-full" loading={isSubmitting}>
-            Create account
-          </Button>
-        </form>
+        <div className="space-y-4">
+          <div className="space-y-4">
+            <a
+              href={`${API_URL}/auth/google`}
+              className="flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border border-sf-border-gray bg-white text-sm font-semibold text-sf-charcoal transition-colors hover:bg-sf-cream"
+            >
+              <GoogleIcon />
+              Sign up with Google
+            </a>
+            <div className="flex items-center gap-3 text-xs text-sf-muted-gray" aria-hidden>
+              <span className="h-px flex-1 bg-sf-border-gray" />
+              or create an account with email
+              <span className="h-px flex-1 bg-sf-border-gray" />
+            </div>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            {serverError ? <Toast kind="error" message={serverError} /> : null}
+            <Field label="Full name" error={errors.name?.message}>
+              <Input autoComplete="name" placeholder="Rafi Hassan" {...register('name')} />
+            </Field>
+            <Field label="Email" error={errors.email?.message}>
+              <Input type="email" autoComplete="email" placeholder="you@example.com" {...register('email')} />
+            </Field>
+            <Field label="Password" error={errors.password?.message} hint="At least 8 characters.">
+              <Input type="password" autoComplete="new-password" placeholder="••••••••" {...register('password')} />
+            </Field>
+            <Button type="submit" className="w-full" loading={isSubmitting}>
+              Create account
+            </Button>
+          </form>
+        </div>
       )}
     </AuthShell>
   );

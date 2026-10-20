@@ -109,12 +109,10 @@ export default function ChatsPage() {
         meId={''}
         members={members.map((m) => ({ id: m.userId, name: m.name }))}
         onClose={() => setModal(false)}
-        onDone={async (id) => {
+        onDone={async () => {
           setModal(false);
           setToast({ kind: 'success', message: 'Conversation ready.' });
           await load();
-          window.location.hash = '';
-          if (id) void id;
         }}
       />
     </div>

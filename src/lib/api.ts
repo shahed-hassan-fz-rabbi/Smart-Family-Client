@@ -5,6 +5,8 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '') ?? 'http://localhost:4000/api';
 
+export { API_URL };
+
 export class ApiError extends Error {
   status: number;
   details?: unknown;

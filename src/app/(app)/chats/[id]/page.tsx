@@ -30,6 +30,7 @@ export default function ChatDetailPage() {
   const [sending, setSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const typingSentAt = useRef(0);
 
   const scrollToEnd = useCallback(() => {
     requestAnimationFrame(() => {
@@ -134,7 +135,9 @@ export default function ChatDetailPage() {
 
   function onTypingChange(value: string) {
     setInput(value);
-    if (value) {
+    // Throttle typing signals to at most one per 1.5s — the backend relays each one to the room.
+    if (value && Date.now() - typingSentAt.current > 1500) {
+      typingSentAt.current = Date.now();
       void api.post(`/conversations/${params.id}/typing`);
     }
   }

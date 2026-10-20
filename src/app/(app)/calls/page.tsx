@@ -54,7 +54,7 @@ function CallsInner() {
         participantIds,
         conversationId: params.get('conversationId') ?? undefined,
       });
-      router.push(`/calls/${res.call.id}`);
+      router.push(`/calls/${res.call.id}?mode=${mode}`);
     } catch (err) {
       setToast({ kind: 'error', message: err instanceof ApiError ? err.message : 'Could not start the call' });
       setStarting(false);

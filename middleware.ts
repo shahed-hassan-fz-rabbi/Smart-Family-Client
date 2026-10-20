@@ -32,7 +32,9 @@ export function middleware(req: NextRequest) {
   if (!hasSession && PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
     const url = req.nextUrl.clone();
     url.pathname = '/login';
-    url.searchParams.set('next', pathname);
+    // Preserve the query string (e.g. invitation tokens on /family/join?token=…)
+    // so the user resumes exactly where they were after signing in.
+    url.searchParams.set('next', `${pathname}${req.nextUrl.search}`);
     return NextResponse.redirect(url);
   }
 

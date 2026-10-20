@@ -24,6 +24,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { IncomingCallWatcher } from '@/components/IncomingCallWatcher';
 import { Badge, Spinner } from '@/components/ui';
 
 const NAV = [
@@ -197,6 +198,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="mx-auto max-w-6xl">{children}</div>
         </main>
       </div>
+
+      <IncomingCallWatcher />
     </div>
   );
 }
