@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sf-midnight: #111111;
+  --sf-orange: #ff7a18;
+  --sf-deep-orange: #c2410c;
+  --sf-cream: #fff7ed;
+}
+
+body {
+  @apply bg-sf-cream text-sf-charcoal antialiased;
+}
+
+::selection {
+  background: #ffedD5;
+  color: #c2410c;
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid #ff7a18;
+  outline-offset: 2px;
+}
+
+/* Reduced motion: disable animations/transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scrollbars — subtle */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e5e5e5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffedD5;
+}
