@@ -78,3 +78,10 @@ Everything in the feature list above is real client code wired to real server en
 - **`GEMINI_API_KEY` set** → AI assistant produces and executes real proposals; without it the UI honestly reports the server is not configured.
 - **LiveKit configured** → calls connect in a real room; without it the call pages show the server's `503 CALLING_NOT_CONFIGURED` message.
 - **Email/push delivery** is not implemented anywhere in the platform — the UI never claims it.
+
+## Official logo
+
+public/smartfamily logo.png is the official Smart Family brand asset (untouched). It is used in the
+marketer navbar/footer, auth screens, family dashboard topbar and sidebar, loading states, the
+Platform Admin sidebar, and as the browser favicon (via metadata.icons). The PNG has transparent
+corners, so it reads clearly in both Dark and Light mode without any container.

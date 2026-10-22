@@ -58,13 +58,13 @@ export default function FeaturesPage() {
       <MarketingNav />
       <main className="bg-grad-light">
         <div className="mx-auto max-w-6xl px-4 py-16">
-          <h1 className="text-3xl font-bold text-sf-midnight">Features</h1>
+          <h1 className="text-3xl font-bold text-sf-ink">Features</h1>
           <p className="mt-2 text-sf-muted-gray max-w-2xl">
             Every feature below is built against a real backend — persistent data, authorization checks, and honest states.
           </p>
           {SECTIONS.map((s) => (
-            <section key={s.title} className="mt-10 bg-white rounded-xl border border-sf-border-gray shadow-card p-6">
-              <h2 className="text-xl font-bold text-sf-midnight">{s.title}</h2>
+            <section key={s.title} className="mt-10 bg-sf-white rounded-xl border border-sf-border-gray shadow-card p-6">
+              <h2 className="text-xl font-bold text-sf-ink">{s.title}</h2>
               <p className="mt-2 text-sm text-sf-muted-gray">{s.intro}</p>
               <ul className="mt-4 space-y-2">
                 {s.items.map((item) => (

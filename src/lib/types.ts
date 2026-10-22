@@ -4,6 +4,8 @@ export interface PublicUser {
   id: string;
   name: string;
   email: string;
+  /** Platform privilege — 'super_admin' is granted only by the secure bootstrap script. */
+  role: 'user' | 'super_admin';
   preferredLanguage: 'en' | 'bn' | 'banglish';
   timezone: string;
   privacy: {

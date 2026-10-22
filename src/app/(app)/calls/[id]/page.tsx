@@ -77,7 +77,7 @@ function Inner() {
   if (conn === 'error') {
     return (
       <div className="mx-auto max-w-xl mt-8">
-        <div className="bg-white rounded-xl border border-sf-border-gray p-6">
+        <div className="bg-sf-white rounded-xl border border-sf-border-gray p-6">
           <ErrorState message={error ?? 'Calling is unavailable'} />
           <div className="flex justify-center gap-2">
             <Button variant="outline" onClick={() => void loadToken()}>Retry</Button>

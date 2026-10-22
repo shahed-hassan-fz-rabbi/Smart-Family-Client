@@ -79,7 +79,7 @@ export function IncomingCallWatcher() {
           {call.mode === 'video' ? <Video className="h-6 w-6" /> : <Phone className="h-6 w-6" />}
         </span>
         <div>
-          <p className="font-semibold text-sf-midnight">{call.from}</p>
+          <p className="font-semibold text-sf-ink">{call.from}</p>
           <p className="text-xs text-sf-muted-gray">
             {call.mode === 'video' ? 'Video' : 'Audio'} call · Smart Family does not record calls
           </p>

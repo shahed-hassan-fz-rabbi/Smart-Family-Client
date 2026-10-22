@@ -82,7 +82,7 @@ export default function UpdatesPage() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-sm text-sf-midnight">{u.isMine ? 'You' : u.author}</p>
+                    <p className="font-semibold text-sm text-sf-ink">{u.isMine ? 'You' : u.author}</p>
                     {u.pinned ? <Badge color="orange"><Pin className="inline h-3 w-3 mr-0.5" />Pinned</Badge> : null}
                     <span className="text-xs text-sf-muted-gray">{relativeTime(u.createdAt)}</span>
                   </div>

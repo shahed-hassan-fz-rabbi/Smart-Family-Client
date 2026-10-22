@@ -63,7 +63,7 @@ function LoginForm() {
 
       <a
         href={`${API_URL}/auth/google`}
-        className="flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border border-sf-border-gray bg-white text-sm font-semibold text-sf-charcoal transition-colors hover:bg-sf-cream"
+        className="flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border border-sf-border-gray bg-sf-white text-sm font-semibold text-sf-charcoal transition-colors hover:bg-sf-cream"
       >
         <GoogleIcon />
         Sign in with Google

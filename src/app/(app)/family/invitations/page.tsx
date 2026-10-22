@@ -100,7 +100,7 @@ export default function InvitationsPage() {
       {error ? <div className="mb-4"><Toast kind="error" message={error} /></div> : null}
 
       <Card className="p-5 mb-6">
-        <h2 className="font-semibold text-sf-midnight mb-3">Invite a family member</h2>
+        <h2 className="font-semibold text-sf-ink mb-3">Invite a family member</h2>
         {newToken ? (
           <div className="space-y-3">
             <Toast kind="success" message="Invitation created. Share the link below — it expires in 7 days." />
@@ -130,7 +130,7 @@ export default function InvitationsPage() {
           >
             <Field label="Email (optional)" hint="Notifies the person if they already have an account.">
               <input
-                className="h-10 w-full rounded-lg border border-sf-border-gray bg-white px-3 text-sm focus:border-sf-orange focus:outline-none"
+                className="h-10 w-full rounded-lg border border-sf-border-gray bg-sf-white px-3 text-sm focus:border-sf-orange focus:outline-none"
                 type="email"
                 value={inviteEmail}
                 onChange={(e) => setInviteEmail(e.target.value)}
@@ -160,7 +160,7 @@ export default function InvitationsPage() {
             <Card key={inv.id} className="p-4">
               <div className="flex flex-wrap items-center gap-3">
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium text-sf-midnight">{inv.email ?? 'Invitation link'}</p>
+                  <p className="font-medium text-sf-ink">{inv.email ?? 'Invitation link'}</p>
                   <p className="text-xs text-sf-muted-gray">
                     Created {formatDate(inv.createdAt)} · expires {formatDate(inv.expiresAt)}
                   </p>

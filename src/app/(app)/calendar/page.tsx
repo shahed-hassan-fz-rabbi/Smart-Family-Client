@@ -107,7 +107,7 @@ export default function CalendarPage() {
             <button onClick={() => setMonthCursor(new Date(y, m - 1, 1))} className="p-2 rounded-lg hover:bg-sf-cream" aria-label="Previous month">
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <p className="font-bold text-sf-midnight">{monthCursor.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</p>
+            <p className="font-bold text-sf-ink">{monthCursor.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}</p>
             <button onClick={() => setMonthCursor(new Date(y, m + 1, 1))} className="p-2 rounded-lg hover:bg-sf-cream" aria-label="Next month">
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -153,7 +153,7 @@ export default function CalendarPage() {
               <div className="flex flex-wrap items-start gap-3">
                 <CalendarDays className="h-5 w-5 text-sf-deep-orange mt-0.5 shrink-0" aria-hidden />
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sf-midnight">{e.title}</p>
+                  <p className="font-medium text-sf-ink">{e.title}</p>
                   <p className="text-sm text-sf-muted-gray">
                     {formatDateTime(e.startAt)} – {new Date(e.endAt).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}
                   </p>

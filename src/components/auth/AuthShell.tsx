@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { BrandMark } from '@/components/BrandMark';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function AuthShell({
   title,
@@ -40,19 +41,22 @@ export default function AuthShell({
           <BrandMark />
           <span className="text-lg font-bold text-white">Smart Family</span>
         </Link>
-        <Link
-          href="/help"
-          className="ml-auto rounded-lg px-3 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-        >
-          Help
-        </Link>
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="/help"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+          >
+            Help
+          </Link>
+        </div>
       </header>
 
       {/* Centered card */}
       <main className="flex flex-1 items-center justify-center p-4">
         <div className="w-full max-w-md animate-fade-in">
-          <div className="bg-white rounded-2xl shadow-card-hover p-6 sm:p-8">
-            <h1 className="text-xl font-bold text-sf-midnight">{title}</h1>
+          <div className="bg-sf-white rounded-2xl shadow-card-hover p-6 sm:p-8">
+            <h1 className="text-xl font-bold text-sf-ink">{title}</h1>
             <p className="text-sm text-sf-muted-gray mt-1 mb-6">{subtitle}</p>
             {children}
           </div>

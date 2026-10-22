@@ -34,7 +34,7 @@ function JoinInner() {
     return (
       <Card className="p-8 max-w-md mx-auto text-center">
         <Users className="h-10 w-10 text-sf-deep-orange mx-auto" aria-hidden />
-        <h1 className="mt-3 font-bold text-sf-midnight">No invitation token</h1>
+        <h1 className="mt-3 font-bold text-sf-ink">No invitation token</h1>
         <p className="mt-1 text-sm text-sf-muted-gray">
           This page is for invitation links like <code className="text-xs">/family/join?token=…</code>. Ask the family
           member who invited you to share the link again.
@@ -50,7 +50,7 @@ function JoinInner() {
     return (
       <Card className="p-8 max-w-md mx-auto text-center">
         <CheckCircle2 className="h-12 w-12 text-sf-success mx-auto" aria-hidden />
-        <h1 className="mt-3 font-bold text-sf-midnight">You have joined the family!</h1>
+        <h1 className="mt-3 font-bold text-sf-ink">You have joined the family!</h1>
         <p className="mt-1 text-sm text-sf-muted-gray">Taking you to your family space…</p>
       </Card>
     );
@@ -60,7 +60,7 @@ function JoinInner() {
     return (
       <Card className="p-8 max-w-md mx-auto text-center">
         <XCircle className="h-12 w-12 text-sf-error mx-auto" aria-hidden />
-        <h1 className="mt-3 font-bold text-sf-midnight">This invitation did not work</h1>
+        <h1 className="mt-3 font-bold text-sf-ink">This invitation did not work</h1>
         <Toast kind="error" message={message} />
         <p className="mt-3 text-xs text-sf-muted-gray">
           Invitation links are single-use and expire after 7 days. Ask the family owner or an admin to create a new one.
@@ -75,7 +75,7 @@ function JoinInner() {
   return (
     <Card className="p-8 max-w-md mx-auto text-center">
       <Users className="h-10 w-10 text-sf-deep-orange mx-auto" aria-hidden />
-      <h1 className="mt-3 font-bold text-sf-midnight">You have been invited to a family</h1>
+      <h1 className="mt-3 font-bold text-sf-ink">You have been invited to a family</h1>
       <p className="mt-1 text-sm text-sf-muted-gray">
         Accepting joins this Smart Family space with your current account. Invitations are single-use and expire.
       </p>

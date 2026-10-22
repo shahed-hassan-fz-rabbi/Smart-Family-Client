@@ -52,19 +52,19 @@ export default function HelpPage() {
       <div className="mb-6 flex items-start gap-3">
         <HelpCircle className="h-8 w-8 text-sf-deep-orange shrink-0" aria-hidden />
         <div>
-          <h1 className="text-2xl font-bold text-sf-midnight">Help &amp; Support</h1>
+          <h1 className="text-2xl font-bold text-sf-ink">Help &amp; Support</h1>
           <p className="mt-1 text-sm text-sf-muted-gray">How Smart Family works — and what it will (and won&apos;t) do for you.</p>
         </div>
       </div>
 
       <Card className="p-5 mb-6">
-        <h2 className="font-semibold text-sf-midnight mb-3">Where everything lives</h2>
+        <h2 className="font-semibold text-sf-ink mb-3">Where everything lives</h2>
         <div className="grid gap-2 sm:grid-cols-2">
           {GLOSSARY.map((g) => (
             <Link key={g.label} href={g.href} className="flex items-start gap-3 rounded-lg border border-sf-border-gray p-3 hover:border-sf-orange transition-colors">
               <g.icon className="h-4 w-4 text-sf-deep-orange mt-0.5 shrink-0" aria-hidden />
               <span>
-                <span className="block text-sm font-medium text-sf-midnight">{g.label}</span>
+                <span className="block text-sm font-medium text-sf-ink">{g.label}</span>
                 <span className="block text-xs text-sf-muted-gray">{g.desc}</span>
               </span>
             </Link>
@@ -72,7 +72,7 @@ export default function HelpPage() {
         </div>
       </Card>
 
-      <h2 className="font-semibold text-sf-midnight mb-3">Frequently asked questions</h2>
+      <h2 className="font-semibold text-sf-ink mb-3">Frequently asked questions</h2>
       <div className="space-y-2">
         {FAQS.map((f, i) => (
           <Card key={f.q} className="overflow-hidden">
@@ -81,7 +81,7 @@ export default function HelpPage() {
               className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left"
               aria-expanded={open === i}
             >
-              <span className="font-medium text-sm text-sf-midnight">{f.q}</span>
+              <span className="font-medium text-sm text-sf-ink">{f.q}</span>
               <ChevronDown className={`h-4 w-4 text-sf-muted-gray transition-transform ${open === i ? 'rotate-180' : ''}`} aria-hidden />
             </button>
             {open === i ? (
@@ -92,7 +92,7 @@ export default function HelpPage() {
       </div>
 
       <Card className="mt-6 p-5">
-        <h2 className="font-semibold text-sf-midnight mb-2">Still stuck?</h2>
+        <h2 className="font-semibold text-sf-ink mb-2">Still stuck?</h2>
         <p className="text-sm text-sf-muted-gray mb-3">
           If something in the app reports an error (for example, calling or AI needing configuration), that message reflects the real server state —
           share it with whoever administers your Smart Family deployment.

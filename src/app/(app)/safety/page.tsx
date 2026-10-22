@@ -99,7 +99,7 @@ export default function SafetyPage() {
             <Siren className="h-6 w-6" />
           </span>
           <div className="flex-1 min-w-[240px]">
-            <h2 className="font-bold text-sf-midnight">Need urgent family help?</h2>
+            <h2 className="font-bold text-sf-ink">Need urgent family help?</h2>
             <p className="text-sm text-sf-muted-gray">
               Sends an in-app SOS alert to your family members with your emergency contacts. Smart Family does NOT
               contact emergency services — call your local emergency number directly in a real emergency.
@@ -134,7 +134,7 @@ export default function SafetyPage() {
                 <li key={c.id} className="flex flex-wrap items-center gap-3 px-5 py-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-sf-midnight truncate">{c.name}</p>
+                      <p className="font-medium text-sf-ink truncate">{c.name}</p>
                       {c.isPrimary ? <Badge color="orange"><Star className="inline h-3 w-3 mr-0.5" />Primary</Badge> : null}
                     </div>
                     <p className="text-xs text-sf-muted-gray">{c.relationship}</p>
@@ -165,7 +165,7 @@ export default function SafetyPage() {
         {/* Privacy controls */}
         <div className="space-y-5">
           <Card className="p-5 space-y-4">
-            <h3 className="font-semibold text-sf-midnight">Privacy controls</h3>
+            <h3 className="font-semibold text-sf-ink">Privacy controls</h3>
             <Checkbox
               label={<span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> Share my location with family</span>}
               description="Opt-in only. Family members can see that you share location; Smart Family never tracks secretly."
@@ -178,7 +178,7 @@ export default function SafetyPage() {
             </p>
           </Card>
           <Card className="p-5">
-            <h3 className="font-semibold text-sf-midnight mb-2">What SOS does &amp; doesn&apos;t do</h3>
+            <h3 className="font-semibold text-sf-ink mb-2">What SOS does &amp; doesn&apos;t do</h3>
             <ul className="text-xs text-sf-muted-gray space-y-1.5">
               <li>✅ Sends an in-app alert to family members with your emergency contacts</li>
               <li>✅ Indicates whether you opted into location sharing (never the actual coordinates)</li>

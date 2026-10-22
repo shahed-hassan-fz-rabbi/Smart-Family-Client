@@ -41,7 +41,7 @@ export default function ProfilePage() {
             {(user?.name ?? 'U').split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase()}
           </span>
           <div>
-            <p className="font-semibold text-sf-midnight">{user?.email}</p>
+            <p className="font-semibold text-sf-ink">{user?.email}</p>
             <Badge color="gray">{user?.preferredLanguage === 'bn' ? 'Bangla' : user?.preferredLanguage === 'banglish' ? 'Banglish' : 'English'} speaker</Badge>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function ProfilePage() {
       </Card>
 
       <Card className="mt-5 p-5">
-        <h3 className="font-semibold text-sf-midnight mb-2">What your family can see</h3>
+        <h3 className="font-semibold text-sf-ink mb-2">What your family can see</h3>
         <ul className="text-sm text-sf-muted-gray space-y-1">
           <li>• Your name, role, and language preference</li>
           <li>• Tasks you assigned or completed in your family</li>

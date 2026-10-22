@@ -194,7 +194,7 @@ export default function AssistantPage() {
                         />
                       ) : (
                         <button onClick={() => void openConversation(c.id)} className="min-w-0 flex-1 text-left">
-                          <p className="truncate text-sm font-medium text-sf-midnight">{c.title}</p>
+                          <p className="truncate text-sm font-medium text-sf-ink">{c.title}</p>
                           <p className="truncate text-xs text-sf-muted-gray">{c.preview || '…'}</p>
                         </button>
                       )}
@@ -377,7 +377,7 @@ function ProposalCard({ proposal, onConfirm, onCancel }: { proposal: ProposalVie
           <Badge color={done ? 'green' : proposal.state === 'failed' ? 'red' : 'gray'}>
             {done ? 'Executed' : proposal.state === 'failed' ? 'Failed' : 'Cancelled'}
           </Badge>
-          <span className="font-medium text-sf-midnight">{TYPE_LABEL[proposal.type] ?? proposal.type}</span>
+          <span className="font-medium text-sf-ink">{TYPE_LABEL[proposal.type] ?? proposal.type}</span>
           {proposal.result ? <span className="text-sf-muted-gray truncate">{proposal.result}</span> : null}
         </div>
       </Card>

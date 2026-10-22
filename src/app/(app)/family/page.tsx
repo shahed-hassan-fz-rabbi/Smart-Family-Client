@@ -119,7 +119,7 @@ export default function FamilySpacePage() {
                   {m.name.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase()}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-medium text-sf-midnight">{m.name}</p>
+                  <p className="truncate font-medium text-sf-ink">{m.name}</p>
                   <p className="truncate text-xs text-sf-muted-gray">{m.email}</p>
                 </div>
                 <Badge color={m.role === 'owner' ? 'dark' : m.role === 'admin' ? 'orange' : 'gray'}>
@@ -152,7 +152,7 @@ export default function FamilySpacePage() {
 
         <div className="space-y-5">
           <Card className="p-5 space-y-4">
-            <h3 className="font-semibold text-sf-midnight">Family actions</h3>
+            <h3 className="font-semibold text-sf-ink">Family actions</h3>
             <Button className="w-full" onClick={() => router.push('/family/invitations')}>
               <Plus className="h-4 w-4" /> Invite a family member
             </Button>
@@ -166,7 +166,7 @@ export default function FamilySpacePage() {
             ) : null}
           </Card>
           <Card className="p-5">
-            <h3 className="font-semibold text-sf-midnight mb-2">Your role</h3>
+            <h3 className="font-semibold text-sf-ink mb-2">Your role</h3>
             <p className="text-sm text-sf-muted-gray">
               You are {role === 'owner' ? 'the family owner' : role === 'admin' ? 'a family admin' : 'a family member'} of{' '}
               <span className="font-medium text-sf-charcoal">{family.name}</span>.

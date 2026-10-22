@@ -36,9 +36,9 @@ export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-sf-midnight">
       <MarketingNav />
-      <main className="bg-white">
+      <main className="bg-sf-white">
         <div className="mx-auto max-w-4xl px-4 py-16">
-          <h1 className="text-3xl font-bold text-sf-midnight">How It Works</h1>
+          <h1 className="text-3xl font-bold text-sf-ink">How It Works</h1>
           <p className="mt-2 text-sf-muted-gray">From empty space to coordinated family — five steps.</p>
           <div className="mt-10 space-y-6">
             {STEPS.map((s) => (
@@ -47,7 +47,7 @@ export default function HowItWorksPage() {
                   {s.n}
                 </span>
                 <div className="border-b border-sf-border-gray pb-6">
-                  <h2 className="font-semibold text-sf-midnight">{s.title}</h2>
+                  <h2 className="font-semibold text-sf-ink">{s.title}</h2>
                   <p className="mt-1 text-sm text-sf-muted-gray leading-relaxed">{s.body}</p>
                 </div>
               </div>

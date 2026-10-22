@@ -1,4 +1,5 @@
-import { ButtonHTMLAttributes, forwardRef, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';import { Loader2 } from 'lucide-react';
+import { ButtonHTMLAttributes, forwardRef, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes, useEffect } from 'react';import { Loader2, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 /* ---------------- Button ---------------- */
 
@@ -10,7 +11,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
   secondary: 'bg-sf-cream text-sf-deep-orange hover:bg-sf-light-orange border border-sf-light-orange',
   ghost: 'bg-transparent text-sf-charcoal hover:bg-sf-cream',
   danger: 'bg-sf-error text-white hover:brightness-110',
-  outline: 'bg-white text-sf-charcoal border border-sf-border-gray hover:border-sf-orange hover:text-sf-deep-orange',
+  outline: 'bg-sf-white text-sf-charcoal border border-sf-border-gray hover:border-sf-orange hover:text-sf-deep-orange',
 };
 
 const buttonSizes: Record<ButtonSize, string> = {
@@ -47,7 +48,7 @@ export function Button({
 
 export function Card({ className = '', children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={`bg-white rounded-xl border border-sf-border-gray shadow-card ${className}`}>
+    <div className={`bg-sf-white rounded-xl border border-sf-border-gray shadow-card ${className}`}>
       {children}
     </div>
   );
@@ -56,7 +57,7 @@ export function Card({ className = '', children }: { className?: string; childre
 export function CardHeader({ title, action, icon }: { title: ReactNode; action?: ReactNode; icon?: ReactNode }) {
   return (
     <div className="flex items-center justify-between px-5 py-4 border-b border-sf-border-gray">
-      <div className="flex items-center gap-2 text-sf-midnight font-semibold">
+      <div className="flex items-center gap-2 text-sf-ink font-semibold">
         {icon}
         <h3 className="text-base">{title}</h3>
       </div>
@@ -70,7 +71,7 @@ export function CardHeader({ title, action, icon }: { title: ReactNode; action?:
 export function Input({ className = '', ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
-      className={`h-10 w-full rounded-lg border border-sf-border-gray bg-white px-3 text-sm text-sf-midnight placeholder:text-sf-muted-gray focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange disabled:bg-sf-cream ${className}`}
+      className={`h-10 w-full rounded-lg border border-sf-border-gray bg-sf-white px-3 text-sm text-sf-ink placeholder:text-sf-muted-gray focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange disabled:bg-sf-cream ${className}`}
       {...props}
     />
   );
@@ -79,7 +80,7 @@ export function Input({ className = '', ...props }: InputHTMLAttributes<HTMLInpu
 export function Textarea({ className = '', ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
-      className={`w-full rounded-lg border border-sf-border-gray bg-white px-3 py-2 text-sm text-sf-midnight placeholder:text-sf-muted-gray focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange ${className}`}
+      className={`w-full rounded-lg border border-sf-border-gray bg-sf-white px-3 py-2 text-sm text-sf-ink placeholder:text-sf-muted-gray focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange ${className}`}
       {...props}
     />
   );
@@ -88,7 +89,7 @@ export function Textarea({ className = '', ...props }: TextareaHTMLAttributes<HT
 export function Select({ className = '', children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className={`h-10 w-full rounded-lg border border-sf-border-gray bg-white px-3 text-sm text-sf-midnight focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange ${className}`}
+      className={`h-10 w-full cursor-pointer rounded-lg border border-sf-border-gray bg-sf-white px-3 text-sm text-sf-ink focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange ${className}`}
       {...props}
     >
       {children}
@@ -120,10 +121,10 @@ export function Field({
 /* ---------------- Badge ---------------- */
 
 const badgeColors: Record<string, string> = {
-  green: 'bg-green-100 text-sf-success',
-  amber: 'bg-amber-100 text-amber-800',
+  green: 'bg-[rgb(var(--sf-success)/0.12)] text-sf-success',
+  amber: 'bg-[rgb(var(--sf-warning)/0.12)] text-[rgb(var(--sf-warning))]',
   orange: 'bg-sf-light-orange text-sf-deep-orange',
-  red: 'bg-red-100 text-sf-error',
+  red: 'bg-[rgb(var(--sf-error)/0.12)] text-sf-error',
   gray: 'bg-sf-border-gray/60 text-sf-charcoal',
   dark: 'bg-sf-midnight text-white',
 };
@@ -144,7 +145,7 @@ export function Spinner({ className = '' }: { className?: string }) {
 
 export function LoadingState({ label = 'Loading…' }: { label?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 py-16 text-sf-muted-gray">
+    <div className="flex flex-col items-center justify-center gap-2 py-12 text-sf-muted-gray">
       <Spinner />
       <span className="text-sm">{label}</span>
     </div>
@@ -153,7 +154,7 @@ export function LoadingState({ label = 'Loading…' }: { label?: string }) {
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
-    <div className="py-12 text-center space-y-3">
+    <div className="py-10 text-center space-y-3">
       <p className="text-sm text-sf-error">{message}</p>
       {onRetry ? (
         <Button variant="outline" size="sm" onClick={onRetry}>
@@ -166,19 +167,19 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 
 export function EmptyState({ title, description, action, icon }: { title: string; description?: string; action?: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="py-12 text-center space-y-3">
+    <div className="py-10 text-center space-y-2.5">
       {icon ? <div className="flex justify-center text-sf-muted-gray">{icon}</div> : null}
-      <h3 className="text-base font-semibold text-sf-midnight">{title}</h3>
+      <h3 className="text-sm font-semibold text-sf-ink">{title}</h3>
       {description ? <p className="text-sm text-sf-muted-gray max-w-sm mx-auto">{description}</p> : null}
-      {action}
+      {action ? <div className="pt-1.5">{action}</div> : null}
     </div>
   );
 }
 
 export function Toast({ kind, message }: { kind: 'success' | 'error'; message: string }) {
   const colors = kind === 'success'
-    ? 'bg-green-50 border-sf-success text-sf-success'
-    : 'bg-red-50 border-sf-error text-sf-error';
+    ? 'bg-[rgb(var(--sf-success)/0.08)] border-[rgb(var(--sf-success)/0.35)] text-sf-success'
+    : 'bg-[rgb(var(--sf-error)/0.08)] border-[rgb(var(--sf-error)/0.35)] text-sf-error';
   return (
     <div className={`rounded-lg border px-4 py-3 text-sm animate-fade-in ${colors}`} role="status">
       {message}
@@ -226,19 +227,39 @@ export function Modal({
   title: string;
   children: ReactNode;
 }) {
-  if (!open) return null;
-  return (
+  // Escape-to-close + background scroll lock while the dialog is open.
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open, onClose]);
+
+  if (!open || typeof document === 'undefined') return null;
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={title}>
       <div className="absolute inset-0 bg-sf-midnight/50" onClick={onClose} aria-hidden />
-      <div className="relative z-10 w-full max-w-lg max-h-[85vh] overflow-y-auto bg-white rounded-2xl shadow-card-hover animate-fade-in">
+      <div className="relative z-10 w-full max-w-lg max-h-[85vh] overflow-y-auto bg-sf-white rounded-2xl shadow-card-hover animate-fade-in">
         <div className="flex items-center justify-between px-5 py-4 border-b border-sf-border-gray">
-          <h2 className="text-base font-semibold text-sf-midnight">{title}</h2>
-          <button onClick={onClose} className="text-sf-muted-gray hover:text-sf-midnight" aria-label="Close">
-            ✕
+          <h2 className="text-base font-semibold text-sf-ink">{title}</h2>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-sf-muted-gray hover:bg-sf-cream hover:text-sf-ink"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" aria-hidden />
           </button>
         </div>
         <div className="p-5">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

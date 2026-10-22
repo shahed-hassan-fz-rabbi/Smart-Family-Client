@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, ListChecks, RotateCcw, Trash2, CheckCircle2, Pencil } from 'lucide-react';
+import { Plus, ListChecks, RotateCcw, Trash2, CheckCircle2, Pencil, Search } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';
 import {
   Button, Card, Badge, EmptyState, ErrorState, Field, Input, LoadingState,
@@ -25,6 +25,8 @@ export default function TasksPage() {
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [mineOnly, setMineOnly] = useState(false);
+  const [search, setSearch] = useState('');
+  const [sortBy, setSortBy] = useState<'due' | 'priority' | 'newest'>('due');
   const [modal, setModal] = useState<'create' | null>(null);
   const [editing, setEditing] = useState<TaskT | null>(null);
   const [toast, setToast] = useState<{ kind: 'success' | 'error'; message: string } | null>(null);
@@ -38,6 +40,7 @@ export default function TasksPage() {
       setTasks(
         tasks.map((t) => ({
           ...t,
+          createdAt: t.created,
           isAssigneeMe: Boolean(user && t.assignee && t.assignee.id === user.id),
         })),
       );
@@ -52,10 +55,36 @@ export default function TasksPage() {
     void load();
   }, [load]);
 
-  const visible = useMemo(() => {
+  const filtered = useMemo(() => {
     if (!tasks) return null;
-    return mineOnly ? tasks.filter((t) => t.isAssigneeMe) : tasks;
-  }, [tasks, mineOnly, ]);
+    let list = mineOnly ? tasks.filter((t) => t.isAssigneeMe) : tasks;
+    const q = search.trim().toLowerCase();
+    if (q) {
+      list = list.filter(
+        (t) => t.title.toLowerCase().includes(q) || (t.description ?? '').toLowerCase().includes(q),
+      );
+    }
+    const byPriority: Record<TaskT['priority'], number> = { high: 0, medium: 1, low: 2 };
+    return list.slice().sort((a, b) => {
+      const aDone = a.status === 'completed';
+      const bDone = b.status === 'completed';
+      if (aDone !== bDone) return aDone ? 1 : -1;
+      if (sortBy === 'due') {
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+      }
+      if (sortBy === 'priority') {
+        const p = byPriority[a.priority] - byPriority[b.priority];
+        if (p !== 0) return p;
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+      }
+      // newest first
+      return new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime();
+    });
+  }, [tasks, mineOnly, search, sortBy]);
 
   async function toggleComplete(t: TaskT) {
     if (!family) return;
@@ -103,19 +132,52 @@ export default function TasksPage() {
 
       {family ? (
         <>
-          <div className="mb-4 flex flex-wrap gap-2">
-            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="w-40">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <div className="relative min-w-[12rem] flex-1 sm:max-w-xs">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sf-muted-gray" aria-hidden />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search tasks…"
+                aria-label="Search tasks"
+                className="pl-9"
+              />
+            </div>
+            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="!w-auto min-w-[9rem]" aria-label="Filter by status">
               <option value="">All statuses</option>
               <option value="pending">Pending</option>
               <option value="in_progress">In progress</option>
               <option value="completed">Completed</option>
             </Select>
-            <Button variant={mineOnly ? 'primary' : 'outline'} onClick={() => setMineOnly((v) => !v)}>
+            <Select value={sortBy} onChange={(e) => setSortBy(e.target.value as 'due' | 'priority' | 'newest')} className="!w-auto min-w-[9rem]" aria-label="Sort tasks">
+              <option value="due">Due date</option>
+              <option value="priority">Priority</option>
+              <option value="newest">Newest first</option>
+            </Select>
+            <Button
+              variant={mineOnly ? 'primary' : 'outline'}
+              onClick={() => setMineOnly((v) => !v)}
+              aria-pressed={mineOnly}
+            >
               My tasks
             </Button>
           </div>
 
-          <TaskList tasks={visible} onToggle={toggleComplete} onEdit={setEditing} onDelete={removeTask} loading={tasks === null} error={error} onRetry={load} />
+          <TaskList
+            tasks={filtered}
+            filtered={Boolean(mineOnly || search || statusFilter)}
+            onToggle={toggleComplete}
+            onEdit={setEditing}
+            onDelete={removeTask}
+            loading={tasks === null}
+            error={error}
+            onRetry={load}
+            onClearFilters={() => {
+              setMineOnly(false);
+              setSearch('');
+              setStatusFilter('');
+            }}
+          />
 
           <TaskModal
             open={modal === 'create'}
@@ -158,22 +220,44 @@ export interface TaskT {
   assignee: { id: string; name: string } | null;
   isAssigneeMe?: boolean;
   createdBy?: 'user' | 'ai';
+  createdAt?: string | null;
 }
 
 function TaskList({
-  tasks, onToggle, onEdit, onDelete, loading, error, onRetry,
+  tasks, filtered, onToggle, onEdit, onDelete, loading, error, onRetry, onClearFilters,
 }: {
   tasks: TaskT[] | null;
+  filtered: boolean;
   onToggle: (t: TaskT) => void;
   onEdit: (t: TaskT) => void;
   onDelete: (t: TaskT) => void;
   loading: boolean;
   error: string | null;
   onRetry: () => void;
+  onClearFilters: () => void;
 }) {
   if (loading) return <LoadingState label="Loading tasks…" />;
   if (error) return <Card><ErrorState message={error} onRetry={onRetry} /></Card>;
-  if (!tasks?.length) return <Card><EmptyState icon={<ListChecks className="h-10 w-10" />} title="No tasks found" description="Create a task or ask the AI assistant to plan one for you." /></Card>;
+  if (!tasks?.length) {
+    return (
+      <Card>
+        <EmptyState
+          icon={<ListChecks className="h-8 w-8" />}
+          title={filtered ? 'No tasks match your filters' : 'No tasks yet'}
+          description={
+            filtered
+              ? 'Try a different search, status, or turn off "My tasks".'
+              : 'Create a task yourself — or ask the AI assistant to plan one for you.'
+          }
+          action={
+            filtered ? (
+              <Button variant="outline" size="sm" onClick={onClearFilters}>Clear filters</Button>
+            ) : undefined
+          }
+        />
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-3">
@@ -191,7 +275,7 @@ function TaskList({
                 <CheckCircle2 className="h-6 w-6" />
               </button>
               <div className="min-w-0 flex-1">
-                <p className={`font-medium text-sf-midnight ${done ? 'line-through' : ''}`}>{t.title}</p>
+                <p className={`font-medium text-sf-ink ${done ? 'line-through' : ''}`}>{t.title}</p>
                 {t.description ? <p className="mt-0.5 text-sm text-sf-muted-gray line-clamp-2">{t.description}</p> : null}
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-sf-muted-gray">
                   <Badge color={STATUS_META[t.status]?.color ?? 'gray'}>{STATUS_META[t.status]?.label ?? t.status}</Badge>

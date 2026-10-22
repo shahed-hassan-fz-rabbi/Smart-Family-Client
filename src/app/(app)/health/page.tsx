@@ -52,7 +52,7 @@ export default function HealthPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-sf-midnight">Health &amp; Wellbeing</h1>
+        <h1 className="text-2xl font-bold text-sf-ink">Health &amp; Wellbeing</h1>
         <p className="mt-1 text-sm text-sf-muted-gray">
           Everyday family wellbeing resources — practical, general, and honest about limits.
           <span className="block mt-1 text-xs text-sf-warning">
@@ -64,7 +64,7 @@ export default function HealthPage() {
         {CATEGORIES.map((c) => (
           <Card key={c.title} className="p-5">
             <c.icon className="h-6 w-6 text-sf-deep-orange" aria-hidden />
-            <h2 className="mt-3 font-semibold text-sf-midnight">{c.title}</h2>
+            <h2 className="mt-3 font-semibold text-sf-ink">{c.title}</h2>
             <p className="mt-1.5 text-sm text-sf-muted-gray leading-relaxed">{c.description}</p>
             <ul className="mt-3 space-y-1.5">
               {c.tips.map((t) => (
@@ -89,5 +89,5 @@ export default function HealthPage() {
 }
 
 function Card({ className = '', children }: { className?: string; children: React.ReactNode }) {
-  return <div className={`bg-white rounded-xl border border-sf-border-gray shadow-card ${className}`}>{children}</div>;
+  return <div className={`bg-sf-white rounded-xl border border-sf-border-gray shadow-card ${className}`}>{children}</div>;
 }

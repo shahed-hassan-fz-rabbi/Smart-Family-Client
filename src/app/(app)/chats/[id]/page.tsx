@@ -164,13 +164,19 @@ export default function ChatDetailPage() {
         <Link href="/chats" className="p-2 -ml-2 rounded-lg hover:bg-sf-light-orange text-sf-charcoal" aria-label="Back to conversations">
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-grad-primary text-white">
-          {conv.type === 'group' ? <Users className="h-4 w-4" /> : <span className="text-xs font-bold">{title.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase()}</span>}
+        <span className="flex h-10 w-10 items-center justify-center rounded-full text-white" aria-hidden>
+          {conv.type === 'group' ? (
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sf-light-orange text-sf-deep-orange"><Users className="h-4 w-4" /></span>
+          ) : (
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-grad-primary text-xs font-bold">{title.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase()}</span>
+          )}
         </span>
         <div className="min-w-0 flex-1">
-          <p className="font-bold text-sf-midnight truncate">{title}</p>
+          <p className="font-bold text-sf-ink truncate">{title}</p>
           <p className="text-xs text-sf-muted-gray truncate">
-            {conv.type === 'group' ? conv.participants.map((p) => p.name).join(', ') : conv.participants.map((p) => p.name).join(', ')}
+            {conv.type === 'group'
+              ? conv.participants.map((p) => p.name).join(', ')
+              : conv.participants.filter((p) => !p.isMe).map((p) => p.name).join(', ')}
           </p>
         </div>
         <Link
@@ -185,16 +191,16 @@ export default function ChatDetailPage() {
 
       {/* Connection status — honest, always visible */}
       {!connected ? (
-        <div className="mb-2 rounded-lg bg-amber-50 border border-amber-200 px-3 py-1.5 text-xs text-amber-800">
+        <div className="mb-2 rounded-lg border border-[rgb(var(--sf-warning)/0.3)] bg-[rgb(var(--sf-warning)/0.08)] px-3 py-1.5 text-xs text-[rgb(var(--sf-warning))]">
           Connecting to real-time delivery… messages still send over the API.
         </div>
       ) : null}
       {error ? (
-        <div className="mb-2 rounded-lg bg-red-50 border border-sf-error/30 px-3 py-1.5 text-xs text-sf-error">{error}</div>
+        <div className="mb-2 rounded-lg border border-[rgb(var(--sf-error)/0.3)] bg-[rgb(var(--sf-error)/0.08)] px-3 py-1.5 text-xs text-sf-error">{error}</div>
       ) : null}
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto bg-white rounded-xl border border-sf-border-gray p-4 space-y-2.5">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto bg-sf-white rounded-xl border border-sf-border-gray p-4 space-y-2.5">
         {messages.length === 0 ? (
           <p className="text-center text-sm text-sf-muted-gray py-10">Say hello 👋 — messages are private between conversation participants.</p>
         ) : messages.map((m, i) => {
@@ -224,7 +230,7 @@ export default function ChatDetailPage() {
           onChange={(e) => onTypingChange(e.target.value)}
           placeholder="Write a message…"
           aria-label="Message"
-          className="flex-1 h-11 px-4 rounded-xl border border-sf-border-gray bg-white text-sm focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange"
+          className="flex-1 h-11 px-4 rounded-xl border border-sf-border-gray bg-sf-white text-sm focus:border-sf-orange focus:outline-none focus:ring-2 focus:ring-sf-light-orange"
         />
         <Button type="submit" disabled={!input.trim() || sending} aria-label="Send message">
           <Send className="h-4 w-4" />

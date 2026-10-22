@@ -2,11 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme tokens — space-separated RGB triplets so Tailwind can compose
+   opacity variants (e.g. bg-sf-white/90). Light values are the original
+   palette; Dark values keep the Smart Family brand (same oranges) with
+   dark surfaces tuned for contrast. */
 :root {
-  --sf-midnight: #111111;
-  --sf-orange: #ff7a18;
-  --sf-deep-orange: #c2410c;
-  --sf-cream: #fff7ed;
+  --sf-midnight: 17 17 17;      /* #111111 — dark surfaces / hero (same in both themes) */
+  --sf-ink: 23 23 23;           /* #171717 — primary text (theme-aware) */
+  --sf-charcoal: 55 55 55;      /* #373737 — body text (slightly softer than ink) */
+  --sf-white: 255 255 255;      /* #FFFFFF — card surface */
+  --sf-orange: 255 122 24;      /* #FF7A18 — primary brand */
+  --sf-deep-orange: 194 65 12;  /* #C2410C — deep orange, actions */
+  --sf-cream: 255 250 245;      /* #FFFAF5 — warm page background */
+  --sf-light-orange: 255 237 213; /* #FFEDD5 — soft accent surface */
+  --sf-muted-gray: 115 115 115; /* #737373 — secondary text */
+  --sf-border-gray: 231 229 228; /* #E7E5E4 — borders */
+  --sf-success: 21 128 61;      /* #15803D */
+  --sf-warning: 180 83 9;       /* #B45309 — darker amber for AA contrast on light */
+  --sf-error: 220 38 38;        /* #DC2626 */
+  color-scheme: light;
+}
+
+.dark {
+  --sf-midnight: 17 17 17;      /* #111111 (unchanged) */
+  --sf-ink: 236 233 229;        /* #ECE9E5 — headings/strong text on dark */
+  --sf-charcoal: 201 196 190;   /* #C9C4BE — body text on dark (AA on #121212) */
+  --sf-white: 29 29 31;         /* #1D1D1F — dark surface (cards, bars) */
+  --sf-orange: 255 122 24;      /* #FF7A18 (unchanged) */
+  --sf-deep-orange: 234 88 12;  /* #EA580C — accent readable on dark */
+  --sf-cream: 18 18 18;         /* #121212 — dark page background */
+  --sf-light-orange: 58 42 28;  /* #3A2A1C — warm dark accent surface */
+  --sf-muted-gray: 163 163 163; /* #A3A3A3 */
+  --sf-border-gray: 46 46 46;   /* #2E2E2E */
+  --sf-success: 74 222 128;     /* #4ADE80 */
+  --sf-warning: 251 191 36;     /* #FBBF24 */
+  --sf-error: 248 113 113;      /* #F87171 */
+  color-scheme: dark;
 }
 
 body {
@@ -14,8 +45,8 @@ body {
 }
 
 ::selection {
-  background: #ffedD5;
-  color: #c2410c;
+  background: rgb(var(--sf-light-orange));
+  color: rgb(var(--sf-deep-orange));
 }
 
 /* Focus visibility for keyboard users */
@@ -35,15 +66,21 @@ body {
   }
 }
 
-/* Scrollbars — subtle */
+/* Scrollbars — subtle, theme-aware */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 ::-webkit-scrollbar-thumb {
-  background: #e5e5e5;
+  background: rgb(var(--sf-border-gray));
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffedD5;
+  background: rgb(var(--sf-light-orange));
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--sf-muted-gray));
 }

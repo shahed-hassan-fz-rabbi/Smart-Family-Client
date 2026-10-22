@@ -97,7 +97,7 @@ export default function NotificationsPage() {
                       <Badge color={style.color}>{style.label}</Badge>
                       {!n.readAt ? <span className="h-2 w-2 rounded-full bg-sf-orange" aria-label="Unread" /> : null}
                     </div>
-                    <p className={`mt-1.5 text-sm ${n.readAt ? 'text-sf-charcoal' : 'font-semibold text-sf-midnight'}`}>{n.title}</p>
+                    <p className={`mt-1.5 text-sm ${n.readAt ? 'text-sf-charcoal' : 'font-semibold text-sf-ink'}`}>{n.title}</p>
                     {n.message ? <p className="text-xs text-sf-muted-gray mt-0.5">{n.message}</p> : null}
                     <p className="text-xs text-sf-muted-gray mt-1">{relativeTime(n.createdAt)}</p>
                   </div>

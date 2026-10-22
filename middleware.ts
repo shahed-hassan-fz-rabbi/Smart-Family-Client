@@ -17,6 +17,7 @@ const PROTECTED_PREFIXES = [
   '/profile',
   '/settings',
   '/help',
+  '/admin',
 ];
 
 const AUTH_PAGES = ['/login', '/signup', '/forgot-password'];
@@ -65,6 +66,8 @@ export const config = {
     '/profile/:path*',
     '/settings/:path*',
     '/help/:path*',
+    '/admin/:path*',
+    '/admin',
     '/login',
     '/signup',
     '/forgot-password',

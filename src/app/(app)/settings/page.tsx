@@ -111,7 +111,7 @@ export default function SettingsPage() {
           <Button variant="outline" onClick={() => void logout()}>Sign out</Button>
           {role !== 'owner' ? (
             <div className="border-t border-sf-border-gray pt-4">
-              <h3 className="font-semibold text-sf-midnight mb-1 flex items-center gap-2"><Trash2 className="h-4 w-4 text-sf-error" /> Danger zone</h3>
+              <h3 className="font-semibold text-sf-ink mb-1 flex items-center gap-2"><Trash2 className="h-4 w-4 text-sf-error" /> Danger zone</h3>
               <p className="text-xs text-sf-muted-gray mb-3">
                 Deactivating your account removes your access immediately. Family memberships are handled separately — ask your family owner to remove you as well.
               </p>

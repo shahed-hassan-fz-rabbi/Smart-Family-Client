@@ -64,9 +64,9 @@ export default function LandingPage() {
       </section>
 
       {/* Problem → solution */}
-      <section className="bg-white">
+      <section className="bg-sf-white">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <h2 className="text-3xl font-bold text-sf-midnight text-center">Families are busy and apart. Coordination shouldn&apos;t be hard.</h2>
+          <h2 className="text-3xl font-bold text-sf-ink text-center">Families are busy and apart. Coordination shouldn&apos;t be hard.</h2>
           <p className="mt-3 text-sf-muted-gray text-center max-w-2xl mx-auto">
             Work, study, and life pull families into different cities — and different apps. Tasks get forgotten, appointments slip,
             and responsibilities stay unclear.
@@ -83,12 +83,12 @@ export default function LandingPage() {
       {/* Feature showcase */}
       <section className="bg-grad-light">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <h2 className="text-3xl font-bold text-sf-midnight text-center">Everything a family needs, nothing it doesn&apos;t</h2>
+          <h2 className="text-3xl font-bold text-sf-ink text-center">Everything a family needs, nothing it doesn&apos;t</h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((f) => (
-              <div key={f.title} className="bg-white rounded-xl border border-sf-border-gray shadow-card p-5 hover:shadow-card-hover transition-shadow">
+              <div key={f.title} className="bg-sf-white rounded-xl border border-sf-border-gray shadow-card p-5 hover:shadow-card-hover transition-shadow">
                 <f.icon className="h-7 w-7 text-sf-deep-orange" aria-hidden />
-                <h3 className="mt-3 font-semibold text-sf-midnight">{f.title}</h3>
+                <h3 className="mt-3 font-semibold text-sf-ink">{f.title}</h3>
                 <p className="mt-1.5 text-sm text-sf-muted-gray leading-relaxed">{f.desc}</p>
               </div>
             ))}
@@ -97,9 +97,9 @@ export default function LandingPage() {
       </section>
 
       {/* AI flow */}
-      <section className="bg-white">
+      <section className="bg-sf-white">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <h2 className="text-3xl font-bold text-sf-midnight text-center">How the AI actually helps</h2>
+          <h2 className="text-3xl font-bold text-sf-ink text-center">How the AI actually helps</h2>
           <p className="mt-3 text-center text-sf-muted-gray max-w-2xl mx-auto">
             The assistant never acts on its own. It reads only what you&apos;re authorized to see, proposes a plan, and you confirm every step.
           </p>
@@ -159,7 +159,7 @@ function PreviewCard({ title, badge, body, dark }: { title: string; badge: strin
   return (
     <div className={`rounded-xl border p-4 ${dark ? 'border-white/15 bg-white/10' : 'border-sf-border-gray bg-white'}`}>
       <span className={`text-[11px] font-semibold uppercase tracking-wide ${dark ? 'text-sf-orange' : 'text-sf-deep-orange'}`}>{badge}</span>
-      <p className={`mt-1 text-sm font-semibold ${dark ? 'text-white' : 'text-sf-midnight'}`}>{title}</p>
+      <p className={`mt-1 text-sm font-semibold ${dark ? 'text-white' : 'text-sf-ink'}`}>{title}</p>
       <p className={`mt-1 text-xs ${dark ? 'text-white/70' : 'text-sf-muted-gray'}`}>{body}</p>
     </div>
   );
@@ -167,9 +167,9 @@ function PreviewCard({ title, badge, body, dark }: { title: string; badge: strin
 
 function ProblemCard({ icon: Icon, title, desc, highlight }: { icon: typeof AlertTriangle; title: string; desc: string; highlight?: boolean }) {
   return (
-    <div className={`rounded-xl p-5 border ${highlight ? 'bg-sf-midnight text-white border-sf-midnight' : 'bg-white border-sf-border-gray shadow-card'}`}>
+    <div className={`rounded-xl p-5 border ${highlight ? 'bg-sf-midnight text-white border-sf-midnight' : 'bg-sf-white border-sf-border-gray shadow-card'}`}>
       <Icon className={`h-6 w-6 ${highlight ? 'text-sf-orange' : 'text-sf-error'}`} aria-hidden />
-      <h3 className={`mt-3 font-semibold ${highlight ? 'text-white' : 'text-sf-midnight'}`}>{title}</h3>
+      <h3 className={`mt-3 font-semibold ${highlight ? 'text-white' : 'text-sf-ink'}`}>{title}</h3>
       <p className={`mt-1 text-sm ${highlight ? 'text-white/75' : 'text-sf-muted-gray'}`}>{desc}</p>
     </div>
   );
@@ -177,9 +177,9 @@ function ProblemCard({ icon: Icon, title, desc, highlight }: { icon: typeof Aler
 
 function TrustCard({ title, desc }: { title: string; desc: string }) {
   return (
-    <div className="bg-white rounded-xl border border-sf-border-gray shadow-card p-6">
+    <div className="bg-sf-white rounded-xl border border-sf-border-gray shadow-card p-6">
       <LockKeyhole className="h-6 w-6 text-sf-deep-orange" aria-hidden />
-      <h3 className="mt-3 font-semibold text-sf-midnight">{title}</h3>
+      <h3 className="mt-3 font-semibold text-sf-ink">{title}</h3>
       <p className="mt-1.5 text-sm text-sf-muted-gray">{desc}</p>
     </div>
   );

@@ -92,7 +92,7 @@ export default function RemindersPage() {
                     <div className="flex flex-wrap items-start gap-3">
                       <BellRing className="h-5 w-5 text-sf-deep-orange mt-0.5 shrink-0" aria-hidden />
                       <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sf-midnight">{r.title}</p>
+                        <p className="font-medium text-sf-ink">{r.title}</p>
                         {r.notes ? <p className="text-sm text-sf-muted-gray">{r.notes}</p> : null}
                         <div className="mt-1.5 flex flex-wrap gap-2 text-xs text-sf-muted-gray">
                           <span>{formatDateTime(r.dueAt)}</span>
