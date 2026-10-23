@@ -10,7 +10,10 @@ export function getSocket(): Socket {
   if (socket && socket.connected) return socket;
   const socketUrl =
     process.env.NEXT_PUBLIC_SOCKET_URL?.replace(/\/+$/, '') ||
-    (process.env.NEXT_PUBLIC_API_URL?.replace(/\/api$/, '') ?? 'http://localhost:4000');
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/api$/, '').replace(/\/+$/, '') ||
+    (typeof window !== 'undefined' && process.env.NODE_ENV === 'production'
+      ? window.location.origin // honest same-origin fallback; never localhost in production
+      : 'http://localhost:4000');
 
   socket = io(socketUrl, {
     withCredentials: true,

@@ -1,9 +1,16 @@
 /**
  * Typed API client. Requests always include credentials so the HttpOnly
  * session cookie reaches the backend. No tokens are stored in JS.
+ *
+ * NEXT_PUBLIC_* values are inlined at BUILD time: set NEXT_PUBLIC_API_URL in
+ * the Vercel project settings (e.g. https://smart-family-server.onrender.com/api)
+ * BEFORE the build that ships it. In development the default points at the
+ * local dev server; in production a missing value degrades to the app's own
+ * origin ("/api") — it can never silently point at localhost.
  */
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '') ?? 'http://localhost:4000/api';
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '') ||
+  (process.env.NODE_ENV !== 'production' ? 'http://localhost:4000/api' : '/api');
 
 export { API_URL };
 

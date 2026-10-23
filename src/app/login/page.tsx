@@ -30,6 +30,17 @@ const GOOGLE_ERRORS: Record<string, string> = {
   failed: 'Google sign-in failed unexpectedly. Please try again or use email sign-in.',
 };
 
+/**
+ * Only same-app paths are valid post-login targets: never an absolute URL,
+ * never a protocol-relative "//host" — those would be open redirects.
+ */
+function safeNextPath(value: string | null): string {
+  if (value && value.startsWith('/') && !value.startsWith('//') && !value.includes('\\')) {
+    return value;
+  }
+  return '/dashboard';
+}
+
 function LoginForm() {
   const { refresh } = useAuth();
   const router = useRouter();
@@ -50,7 +61,7 @@ function LoginForm() {
     try {
       await api.post('/auth/login', values);
       await refresh();
-      router.push(params.get('next') ?? '/dashboard');
+      router.push(safeNextPath(params.get('next')));
     } catch (err) {
       setServerError(err instanceof ApiError ? err.message : 'Could not sign in. Check your connection.');
     }
