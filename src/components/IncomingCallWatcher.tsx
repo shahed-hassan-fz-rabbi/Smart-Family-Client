@@ -12,6 +12,7 @@ import { Phone, PhoneOff, Video } from 'lucide-react';
 import { Button, Modal } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { getSocket } from '@/lib/socket';
+import { playRingtone, stopRingtone } from '@/lib/sound';
 
 interface IncomingCall {
   callId: string;
@@ -52,12 +53,21 @@ export function IncomingCallWatcher() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Play ringtone while the incoming-call modal is visible; stop on action/unmount.
+  useEffect(() => {
+    if (call) {
+      playRingtone();
+    }
+    return () => stopRingtone();
+  }, [call]);
+
   if (!call) return null;
 
   function accept() {
     console.log('[call] incoming accepted — callId:', call!.callId, '| mode:', call!.mode);
     activeCall = null;
     setCall(null);
+    stopRingtone();
     router.push(`/calls/${call!.callId}?mode=${call!.mode}`);
   }
 
@@ -72,12 +82,21 @@ export function IncomingCallWatcher() {
     } finally {
       activeCall = null;
       setCall(null);
+      stopRingtone();
       setDeclining(false);
     }
   }
 
   return (
-    <Modal open onClose={() => { activeCall = null; setCall(null); }} title={call.mode === 'video' ? 'Incoming video call' : 'Incoming call'}>
+    <Modal
+      open
+      onClose={() => {
+        activeCall = null;
+        setCall(null);
+        stopRingtone();
+      }}
+      title={call.mode === 'video' ? 'Incoming video call' : 'Incoming call'}
+    >
       <div className="flex items-center gap-4 pb-2">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-grad-primary text-white animate-pulse">
           {call.mode === 'video' ? <Video className="h-6 w-6" /> : <Phone className="h-6 w-6" />}

@@ -15,6 +15,7 @@ import '@livekit/components-styles';
 import { Button, Badge, ErrorState, LoadingState, Toast } from '@/components/ui';
 import { ApiError, api } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
+import { playCallConnectTone } from '@/lib/sound';
 
 interface TokenData {
   token: string;
@@ -123,6 +124,7 @@ function Inner() {
           audio={mode === 'audio' ? true : undefined}
           video={mode === 'video' ? true : undefined}
           onConnected={() => {
+            playCallConnectTone();
             console.log('[call] LiveKit connected — room:', urlRef.current ?? '(unknown)');
             setConn('connected');
           }}
