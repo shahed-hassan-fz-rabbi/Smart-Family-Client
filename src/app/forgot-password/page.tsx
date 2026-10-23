@@ -12,7 +12,7 @@ const schema = z.object({ email: z.string().email('Enter a valid email') });
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<{ message: string; devToken?: string } | null>(null);
+  const [result, setResult] = useState<{ message: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
@@ -25,12 +25,11 @@ export default function ForgotPasswordPage() {
     setError(null);
     setLoading(true);
     try {
-      const res = await api.post<{ message?: string; devToken?: string }>('/auth/forgot-password', { email });
+      const res = await api.post<{ message?: string }>('/auth/forgot-password', { email });
       setResult({
         message:
           res.message ??
-          'If that email is registered, a reset token was generated. Email delivery is not configured on this server, so an administrator will pass it to you securely.',
-        devToken: res.devToken,
+          'If that email is registered, a reset token has been generated and will be delivered securely by an administrator.',
       });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Request failed. Check your connection.');
@@ -55,21 +54,9 @@ export default function ForgotPasswordPage() {
       {result ? (
         <div className="space-y-4">
           <Toast kind="success" message={result.message} />
-          {result.devToken ? (
-            <div className="rounded-lg bg-sf-cream border border-sf-light-orange p-3 text-sm">
-              <p className="font-medium text-sf-deep-orange mb-1">Development mode token</p>
-              <p className="text-sf-muted-gray mb-2">
-                Email sending is not implemented on this server, so the token is shown here for local testing only. In production it is never displayed.
-              </p>
-              <code className="break-all text-xs">{result.devToken}</code>
-              <Link
-                href={`/reset-password?token=${encodeURIComponent(result.devToken)}`}
-                className="mt-3 block"
-              >
-                <Button className="w-full">Continue to reset password</Button>
-              </Link>
-            </div>
-          ) : null}
+          <p className="text-xs text-sf-muted-gray">
+            Reset tokens are never displayed on this page. An administrator delivers yours through a secure out-of-band channel.
+          </p>
         </div>
       ) : (
         <form onSubmit={onSubmit} className="space-y-4" noValidate>
