@@ -55,16 +55,20 @@ export function IncomingCallWatcher() {
   if (!call) return null;
 
   function accept() {
+    console.log('[call] incoming accepted — callId:', call!.callId, '| mode:', call!.mode);
+    activeCall = null;
+    setCall(null);
     router.push(`/calls/${call!.callId}?mode=${call!.mode}`);
   }
 
   async function decline() {
     setDeclining(true);
     try {
+      console.log('[call] incoming declined — callId:', call!.callId);
       await api.post(`/calls/${call!.callId}/decline`);
     } catch (err) {
       // Surface nothing modal-level; the caller sees the declined event or the call times out.
-      if (err instanceof ApiError) console.warn('Decline failed:', err.message);
+      if (err instanceof ApiError) console.warn('[call] decline failed — callId:', call!.callId, '|', err.message);
     } finally {
       activeCall = null;
       setCall(null);

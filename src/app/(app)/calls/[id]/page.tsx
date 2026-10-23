@@ -45,6 +45,11 @@ function Inner() {
       const res = await api.get<TokenData>(`/calls/${params.id}/token`);
       tokenRef.current = res.token;
       urlRef.current = LK_URL || res.url;
+      try {
+        console.log('[call] token acquired — room:', res.room, '| url host:', new URL(res.url).host, '| mode:', res.mode);
+      } catch {
+        // URL log is best-effort only; never log the token itself.
+      }
       setMode(res.mode);
       setConn('ready');
       return res;
@@ -53,6 +58,7 @@ function Inner() {
         err instanceof ApiError
           ? err.message
           : 'Could not get a call token. Is LiveKit configured on the server?';
+      console.warn('[call] token failed — status:', err instanceof ApiError ? err.status : 'unknown', '|', message);
       setError(message);
       setConn('error');
       return null;
@@ -116,10 +122,14 @@ function Inner() {
           connect={true}
           audio={mode === 'audio' ? true : undefined}
           video={mode === 'video' ? true : undefined}
-          onConnected={() => setConn('connected')}
+          onConnected={() => {
+            console.log('[call] LiveKit connected — room:', urlRef.current ?? '(unknown)');
+            setConn('connected');
+          }}
           onDisconnected={() => {
             if (!endedRef.current) {
               endedRef.current = true;
+              console.log('[call] LiveKit disconnected');
               void api.post(`/calls/${params.id}/end`).catch(() => null);
               router.push('/calls');
             }
@@ -129,6 +139,7 @@ function Inner() {
             const message =
               (err as { message?: string })?.message ??
               'Devices could not start. Check your browser permissions for camera and microphone.';
+            console.warn('[call] LiveKit error —', message);
             setError(message);
             setConn('error');
           }}
